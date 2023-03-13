@@ -15,7 +15,6 @@ namespace HomeAppWebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
     public class HomeController : ControllerBase
     {
         private readonly IHomeDataAccess homeDataAccess;
@@ -27,9 +26,9 @@ namespace HomeAppWebAPI.Controllers
             this.mapper = mapper;
         }
 
-        // GET api/<HomeController>/5
+        // GET api/HomeController/5
         [HttpGet("{id}", Name = "GetHomeModelById")]
-        public async Task<ActionResult<HomeModel>> GetHomeModelById(int id)
+        public async Task<ActionResult<List<HomeModel>>> GetHomeModelById(int id)
         {
             try
             {
@@ -40,7 +39,7 @@ namespace HomeAppWebAPI.Controllers
                     return NotFound();
                 }
 
-                return Ok(output.FirstOrDefault());
+                return Ok(output);
             }
             catch (Exception ex)
             {

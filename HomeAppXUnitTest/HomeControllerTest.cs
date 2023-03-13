@@ -121,7 +121,7 @@ namespace HomeAppXUnitTest
             var result = controller.GetHomeModelById(1);
 
             //Assert
-            Assert.IsType<ActionResult<HomeModel>>(result.Result);
+            Assert.IsType<ActionResult<List<HomeModel>>>(result.Result);
         }
 
         [Fact]

@@ -15,23 +15,35 @@ public class UserData : IUserData
         this.addressData = addressData;
     }
 
-    public Task<List<UserModel>> GetUserById(int id)
+    public async Task<UserModel> GetUserById(int id)
     {
 
-        var output = dataAccess.LoadData<UserModel, dynamic>(
+        var output = await dataAccess.LoadData<UserModel, dynamic>(
                 storedProcedure: "dbo.spSelectUserById",
                 new { Id = id },
                 connectionStringName: "Default");
 
-        return output;
+        if(output == null)
+        {
+            return null;
+        }
+
+        return output.FirstOrDefault();
     }
 
-    public Task<List<ReadUserDTO>> GetUserByObjectId(int objectid)
+    public async Task<ReadUserDTO> GetUserByObjectId(string objectid)
     {
-        return dataAccess.LoadData<ReadUserDTO, dynamic>(
+        var output = await dataAccess.LoadData<ReadUserDTO, dynamic>(
                 storedProcedure: "dbo.spSelectUserByObjectId",
                 new { ObjectId = objectid },
                 connectionStringName: "Default");
+
+        if (output == null)
+        {
+            return null;
+        }
+
+        return output.FirstOrDefault();
     }
 
     public Task DeleteUser(int id)
@@ -42,15 +54,22 @@ public class UserData : IUserData
             connectionStringName: "Default");
     }
 
-    public Task<List<ReadUserDTO>> CreateUser(CreateUserDTO createUser)
+    public async Task<ReadUserDTO> CreateUser(CreateUserDTO createUser)
     {
-        return dataAccess.LoadData<ReadUserDTO, dynamic>(
+        var output = await dataAccess.LoadData<ReadUserDTO, dynamic>(
             storedProcedure: "dbo.spInsertUser",
             new { Name = createUser.Name, Email = createUser.Email, ObjectId = createUser.ObjectId },
             connectionStringName: "Default");
+
+        if (output == null)
+        {
+            return null;
+        }
+
+        return output.FirstOrDefault();
     }
 
-    public async Task<List<ReadUserDTO>> UpdateUser(UserModel userModel)
+    public async Task<ReadUserDTO> UpdateUser(UserModel userModel)
     {
         var result = await dataAccess.LoadData<UserModel, dynamic>(
             storedProcedure: "dbo.spUpdateUser",
@@ -59,17 +78,19 @@ public class UserData : IUserData
 
         if(result != null)
         {
-            return await dataAccess.LoadData<ReadUserDTO, dynamic>(
+            var output =  await dataAccess.LoadData<ReadUserDTO, dynamic>(
                             storedProcedure: "dbo.spSelectUserById",
                             new { Id = result.FirstOrDefault().Id },
                             connectionStringName: "Default");
+
+            return output.FirstOrDefault();
         }
 
         return null;
         
     }
 
-    public async Task<ReadUserDTO> GetUserFullByObjectId(int objectid)
+    public async Task<ReadUserDTO> GetUserFullByObjectId(string objectid)
     {
         var output = await dataAccess.LoadData<ReadUserDTO, dynamic>(
                 storedProcedure: "dbo.spSelectUserByObjectId",

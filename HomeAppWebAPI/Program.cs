@@ -3,14 +3,9 @@ using HomeAppDataAccessLibrary.DataAccess.AddressDataAccess;
 using HomeAppDataAccessLibrary.DataAccess.HomeModelDataAccess;
 using HomeAppDataAccessLibrary.DataAccess.UserDataAccess;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc.Authorization;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Identity.Web;
-using Microsoft.Identity.Web.UI;
-using Newtonsoft.Json.Serialization;
+using Microsoft.IdentityModel.Logging;
+using Microsoft.OpenApi.Models;
 using Serilog;
-using System.Configuration;
 
 namespace HomeAppWebAPI
 {
@@ -20,10 +15,49 @@ namespace HomeAppWebAPI
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            IdentityModelEventSource.ShowPII = true;
+
             builder.Services.AddControllers();
 
             builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
+
+            builder.Services.AddSwaggerGen(c =>
+            {
+                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    Description = "JWT Auth",
+                    Name = "Authorization",
+                    Type = SecuritySchemeType.Http,
+                    In = ParameterLocation.Header,
+                    Scheme = "Bearer",
+                    BearerFormat = "JWT"
+                });
+
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "Bearer"
+                            }
+                        },
+                        new List<string>()
+                    }
+                });
+            });
+
+            //Azure AD B2C
+            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            .AddJwtBearer(opt =>
+            {
+                opt.Audience = builder.Configuration["AAD:ResourceId"];
+                opt.Authority = $"{builder.Configuration["AAD:InstanceId"]}{builder.Configuration["AAD:TenantId"]}";
+            }); 
+
+            builder.Services.AddControllers();
 
             builder.Services.AddSingleton<ISqlDataAccess, SqlDataAccess>();
             builder.Services.AddSingleton<IUserData, UserData>();
@@ -45,11 +79,6 @@ namespace HomeAppWebAPI
 
             builder.Host.UseSerilog();
 
-            builder.Services.AddControllers().AddNewtonsoftJson(s =>
-            {
-                s.SerializerSettings.ContractResolver = new
-                CamelCasePropertyNamesContractResolver();
-            });
 
             var app = builder.Build();
 
@@ -64,6 +93,7 @@ namespace HomeAppWebAPI
             app.UseHttpsRedirection();
 
             app.UseCors();
+
             app.UseAuthentication();
             app.UseAuthorization();
 

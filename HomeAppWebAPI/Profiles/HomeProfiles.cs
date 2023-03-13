@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using HomeAppDataAccessLibrary.Models.AddressModels;
+using HomeAppDataAccessLibrary.Models.DTOs.AddressDTO;
 using HomeAppDataAccessLibrary.Models.DTOs.HomeModelDTO;
 using HomeAppDataAccessLibrary.Models.DTOs.UserDTO;
 using HomeAppDataAccessLibrary.Models.HomeModels;
@@ -21,6 +23,9 @@ namespace HomeAppWebAPI.Profiles
             CreateMap<CreateUserDTO, UserModel>();
             CreateMap<UserModel, CreateUserDTO>();
             CreateMap<UserModel, ReadUserDTO>();
+
+            CreateMap<AddressModel, ReadAddressDTO>();
+            CreateMap<ReadAddressDTO, AddressModel>();
         }
     }
 }

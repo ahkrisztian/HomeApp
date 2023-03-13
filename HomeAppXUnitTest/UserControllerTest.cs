@@ -44,11 +44,11 @@ namespace HomeAppXUnitTest
         {
             //Arrange
             mockRepo.Setup(repo =>
-            repo.GetUserFullByObjectId(1)).Returns(() => null);
+            repo.GetUserFullByObjectId("0")).Returns(() => null);
             var controller = new UserController(mockRepo.Object, mapper);
 
             //Act
-            var result = controller.GetUserFullByObjectId(1);
+            var result = controller.GetUserFullByObjectId("1");
 
             //Assert
 
@@ -60,20 +60,16 @@ namespace HomeAppXUnitTest
         {
             //Arrange
             mockRepo.Setup(repo =>
-            repo.GetUserById(1)).Returns(Task.Run(() => new List<UserModel>()
-            {
-                new UserModel()
+            repo.GetUserFullByObjectId("5")).Returns(Task.Run(() => new ReadUserDTO()
                 {
                     Id = 1,
                     Name = "Test",
-                    Email = "Test",
-                    ObjectId = "5"
-                }
-            }));
+                    Email = "Test"
+                }));
 
             var controller = new UserController(mockRepo.Object, mapper);
             //Act
-            var result = controller.GetUserFullByObjectId(1);
+            var result = controller.GetUserFullByObjectId("5");
             //Assert
             Assert.IsType<OkObjectResult>(result.Result.Result);
         }
@@ -82,15 +78,12 @@ namespace HomeAppXUnitTest
         public void CreateUser_ReturnsValidObject()
         {
             mockRepo.Setup(repo =>
-            repo.GetUserById(1)).Returns(Task.Run(() => new List<UserModel>()
+            repo.GetUserById(1)).Returns(Task.Run(() => new UserModel()
             {
-                new UserModel()
-                {
-                    Id = 1,
-                    Name = "Test",
-                    Email = "Test",
-                    ObjectId = "5"
-                }
+                Id = 1,
+                Name = "Test",
+                Email = "Test",
+                ObjectId = "5"
             }));
 
             var controller = new UserController(mockRepo.Object, mapper);
@@ -104,16 +97,13 @@ namespace HomeAppXUnitTest
         public void CreateUser_Returns201_ValidObject()
         {
             mockRepo.Setup(repo =>
-            repo.GetUserById(1)).Returns(Task.Run(() => new List<UserModel>()
-            {
-                new UserModel()
+            repo.GetUserById(1)).Returns(Task.Run(() => new UserModel()
                 {
                     Id = 1,
                     Name = "Test",
                     Email = "Test",
                     ObjectId = "5"
-                }
-            }));
+                }));
 
             var controller = new UserController(mockRepo.Object, mapper);
 
@@ -126,16 +116,13 @@ namespace HomeAppXUnitTest
         public void UpdateHomeModel_Returns201_ValidObject()
         {
             mockRepo.Setup(repo =>
-            repo.GetUserById(1)).Returns(Task.Run(() => new List<UserModel>()
-            {
-                new UserModel()
+            repo.GetUserById(1)).Returns(Task.Run(() => new UserModel()
                 {
                     Id = 1,
                     Name = "Test",
                     Email = "Test",
                     ObjectId = "5"
-                }
-            }));
+                }));
 
             var controller = new UserController(mockRepo.Object, mapper);
 
@@ -148,16 +135,13 @@ namespace HomeAppXUnitTest
         public void DeleteUser_Returns_NoContent()
         {
             mockRepo.Setup(repo =>
-            repo.GetUserById(1)).Returns(Task.Run(() => new List<UserModel>()
-            {
-                new UserModel()
+            repo.GetUserById(1)).Returns(Task.Run(() => new UserModel()
                 {
                     Id = 1,
                     Name = "Test",
                     Email = "Test",
                     ObjectId = "5"
-                }
-            }));
+                }));
 
             var controller = new UserController(mockRepo.Object, mapper);
 

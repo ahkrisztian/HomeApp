@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="HomeAppMAUI.MainPage"
+             Title="Home App">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Create Home" Clicked="CreateHome"/>
+    </ContentPage.ToolbarItems>
+
+    <CollectionView x:Name="collectionView"
+                    SelectionMode="Single"
+                    SelectionChanged="OnSelectionChanged">
+        <CollectionView.ItemTemplate>
+            <DataTemplate>
+                <Label Text="{Binding Name}" FontSize="Medium"/>
+            </DataTemplate>
+        </CollectionView.ItemTemplate>
+    </CollectionView>
+</ContentPage>
