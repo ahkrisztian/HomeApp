@@ -22,11 +22,46 @@ public partial class MainViewModel : BaseViewModel
         this.dataService = dataService;
         this.userDataService = userDataService;
 
-        User = Task.Run(async () => await userDataService.GetUserById(2)).Result;
+        Task.Run(LoadUser);
 
-        var homes = Task.Run(async () => await dataService.GetHomeModelsById(User.Id)).Result;
+        Task.Run(LoadHomes);
 
-        homeModels = new ObservableCollection<HomeModel>(homes);
+    }
+
+    private async Task LoadUser()
+    {
+        try
+        {
+            var result = await userDataService.GetUserById(2);
+
+            if (result != null)
+            {
+                User = result;
+            }
+        }
+        catch (Exception)
+        {
+
+            await Shell.Current.DisplayAlert("Error!", "Unable to load User", "Error");
+        }
+    }
+
+    private async Task LoadHomes()
+    {      
+        try
+        {
+            var result = await dataService.GetHomeModelsById(User.Id);
+
+            if(result != null)
+            {
+                homeModels = new ObservableCollection<HomeModel>(result);
+            }
+        }
+        catch (Exception)
+        {
+
+            await Shell.Current.DisplayAlert("Error!", "Unable to load Home Models", "Error");
+        }
     }
 
     [RelayCommand]

@@ -111,12 +111,6 @@ public class UserController : ControllerBase
         }
     }
 
-    [HttpPost("/login")]
-    public async Task<ActionResult<string>> LoginUser(string username, string password)
-    {
-        return Ok("token");
-    }
-
 
     // DELETE api/UserController/5
     [HttpDelete("{id}")]
