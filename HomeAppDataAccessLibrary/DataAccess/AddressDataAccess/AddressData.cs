@@ -19,7 +19,7 @@ public class AddressData : IAddressData
     {
         var output = await dataAccess.LoadData<ReadAddressDTO, dynamic>(
                 storedProcedure: "dbo.spSelectAddress",
-                new { UserId = id },
+                new { Id = id },
                 connectionStringName: "Default");
 
         if(output == null)
@@ -44,17 +44,17 @@ public class AddressData : IAddressData
     {
         var output = dataAccess.SaveData<dynamic>(
         storedProcedure: "dbo.spInsertAddress",
-        new { Country = addressDTO.Country, City = addressDTO.City, Street = addressDTO.Street, UserId = addressDTO.UserId },
+        new { Country = addressDTO.Country, City = addressDTO.City, Street = addressDTO.Street, Id = addressDTO.Id },
         connectionStringName: "Default");
 
         return output;
     }
 
-    public Task DeleteAddressByUserId(int id)
+    public Task DeleteAddressByHomeModelId(int id)
     {
         return dataAccess.SaveData<dynamic>(
         storedProcedure: "dbo.spDeleteAddress",
-        new { UserId = id },
+        new { Id = id },
         connectionStringName: "Default");
     }
 
@@ -62,7 +62,7 @@ public class AddressData : IAddressData
     {
         var result = await dataAccess.LoadData<ReadAddressDTO, dynamic>(
             storedProcedure: "dbo.spUpdateAddress",
-            new { UserId = address.UserId, Country = address.Country, City = address.City, Street = address.Street },
+            new { Id = address.Id, Country = address.Country, City = address.City, Street = address.Street },
             connectionStringName: "Default");
 
         if (result != null)

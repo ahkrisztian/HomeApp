@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using HomeAppDataAccessLibrary.Models.AddressModels;
 using HomeAppDataAccessLibrary.Models.DTOs.HomeModelDTO;
 using HomeAppDataAccessLibrary.Models.HomeModels;
 using HomeAppDataAccessLibrary.Models.RoomModels;
@@ -40,9 +41,14 @@ namespace HomeAppXUnitTest
 
             var output = da.CreateHomeModel(new CreateHomeModelDTO()
             {
-                AddressId = 2,
                 UserId = 3,
                 Name = "New Home",
+                Address = new AddressModel
+                {
+                    Country = "Germany",
+                    City = "München",
+                    Street = "Leh Str. 3.",                   
+                },
                 Description = "New Home 1",
                 BathRooms = new List<BathRoomModel>() { new BathRoomModel() { Id = 2, HomeModelId = 2, Description = "New Bathroom1", BathTap = true, Lights = true, RoomTypeId = 10, Shower = true, Tap = true, Windows = true, Toilet = true } },
                 Rooms = new List<RoomModel>() { new RoomModel() { Id = 2, HomeModelId = 2, Description = "New Living room", RoomTypeId = 1, Electronics = true, Lights = true, Windows = true } },
@@ -96,7 +102,6 @@ namespace HomeAppXUnitTest
             var output = da.UpdateHomeModel(new HomeModel()
             {
                 Id = 1,
-                AddressId = 2,
                 UserId = 3,
                 Name = "Updated Home",
                 Description = "Updated Home 1",

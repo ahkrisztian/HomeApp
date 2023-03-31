@@ -8,8 +8,8 @@ namespace HomeAppMAUI
         {
             InitializeComponent();
 
+            Routing.RegisterRoute(nameof(HomeDetails), typeof(HomeDetails));
             Routing.RegisterRoute(nameof(CreateHomePage), typeof(CreateHomePage));
-            Routing.RegisterRoute(nameof(UpdateHomePage), typeof(UpdateHomePage));
         }
     }
 }

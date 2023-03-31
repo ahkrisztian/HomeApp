@@ -1,43 +1,16 @@
 using HomeAppDataAccessLibrary.Models.DTOs.HomeModelDTO;
 using HomeAppMAUI.DataServices;
-using HomeAppMAUI.Model;
+using HomeAppMAUI.ViewModels;
 
 namespace HomeAppMAUI.Pages;
 
-[QueryProperty(nameof(NewHomeModel), "NewHomeModel")]
 public partial class CreateHomePage : ContentPage
 {
-	private readonly IHomeDataService dataService;
-
-    NewHomeModel _newHome;
-
-    public NewHomeModel NewHomeModel
-    {
-        get => _newHome;
-        set
-        {
-            _newHome = value; OnPropertyChanged();
-        }
-    }
-
-
-    public CreateHomePage(IHomeDataService dataService)
+    public CreateHomePage(CreateViewModel createViewModel)
 	{
 		InitializeComponent();
 
-		this.dataService = dataService;
-
-		BindingContext = this;
+		BindingContext = createViewModel;
 	}
 
-	async void OnSaveButtonClicked(object sender, EventArgs e)
-	{
-        await dataService.CreateHomeModel(NewHomeModel);
-
-        await Shell.Current.GoToAsync("..");
-    }
-	async void OnCancelButtonClicked(object sender, EventArgs e)
-	{
-        await Shell.Current.GoToAsync("..");
-    }
 }

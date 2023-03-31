@@ -1,4 +1,5 @@
-﻿using HomeAppDataAccessLibrary.Models.RoomModels;
+﻿using HomeAppDataAccessLibrary.Models.AddressModels;
+using HomeAppDataAccessLibrary.Models.RoomModels;
 using System.ComponentModel.DataAnnotations;
 
 namespace HomeAppDataAccessLibrary.Models.HomeModels;
@@ -15,11 +16,11 @@ public class HomeModel
     public string Description { get; set; }
     [Required]
     public int UserId { get; set; }
-    [Required]
-    public int AddressId { get; set; }
 
+    public AddressModel Address { get; set; }
     public List<BathRoomModel> BathRooms { get; set;} = new List<BathRoomModel>();
     public List<KitchenModel> Kitchen { get; set; } = new List<KitchenModel>();
     public List<ToiletModel> Toilet { get; set; } = new List<ToiletModel>();
     public List<RoomModel> Rooms { get; set;} = new List<RoomModel>();
+
 }

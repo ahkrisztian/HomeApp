@@ -2,6 +2,5 @@
 
 public class RoomModel : RoomModelBase
 {
-    public bool Electronics { get; set; }
-
+    public bool Electronics { get; set; }  
 }

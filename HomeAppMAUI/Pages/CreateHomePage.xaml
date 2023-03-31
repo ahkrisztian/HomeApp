@@ -2,13 +2,14 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="HomeAppMAUI.Pages.CreateHomePage"
+             xmlns:viewmodel="clr-namespace:HomeAppMAUI.ViewModels"
+             x:DataType="viewmodel:CreateViewModel"
              Title="Create Home">
     <VerticalStackLayout>
-        <Entry Text="{Binding NewHomeModel.Name}" Placeholder="Enter Name"/>
-        <Entry Text="{Binding NewHomeModel.Description}" Placeholder="Enter AddressId"/>
-        <Entry Text="{Binding NewHomeModel.UserId}" Placeholder="Enter AddressId"/>
-        <Entry Text="{Binding NewHomeModel.AddressId}" Placeholder="Enter AddressId"/>
-        <Button Text="Create" Clicked="OnSaveButtonClicked"/>
-        <Button Text="Cancel" Clicked="OnCancelButtonClicked"/>
+        <Entry Text="{Binding Name}" Placeholder="Enter Name"/>
+        <Entry Text="{Binding Description}" Placeholder="Enter Description"/>
+        <Entry Text="{Binding Userid}" Placeholder="Enter UserId"/>
+        <Picker Title="Select Address" ItemsSource="{Binding User.Addresses}" SelectedItem="{Binding Address}"/>
+        <Button Text="Create" Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:CreateViewModel}}, Path=CreateNewHomeModelCommand}"/>
     </VerticalStackLayout>
 </ContentPage>

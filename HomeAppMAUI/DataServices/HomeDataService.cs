@@ -1,6 +1,5 @@
 ﻿using HomeAppDataAccessLibrary.Models.DTOs.HomeModelDTO;
 using HomeAppDataAccessLibrary.Models.HomeModels;
-using HomeAppMAUI.Model;
 using System.Diagnostics;
 using System.Text;
 using System.Text.Json;
@@ -26,7 +25,7 @@ namespace HomeAppMAUI.DataServices
             };
         }
 
-        public async Task<HomeModel> CreateHomeModel(NewHomeModel createModel)
+        public async Task<HomeModel> CreateHomeModel(CreateHomeModelDTO createModel)
         {
             HomeModel newHomeModel = null;
 
@@ -38,7 +37,7 @@ namespace HomeAppMAUI.DataServices
 
             try
             {
-                string home = JsonSerializer.Serialize<NewHomeModel>(createModel, _jsonSerializerOptions);
+                string home = JsonSerializer.Serialize<CreateHomeModelDTO>(createModel, _jsonSerializerOptions);
 
                 StringContent content = new StringContent(home, Encoding.UTF8, "application/json");
 
@@ -48,7 +47,7 @@ namespace HomeAppMAUI.DataServices
                 {
                     string newHome = await response.Content.ReadAsStringAsync();
 
-                    newHomeModel = JsonSerializer.Deserialize<List<HomeModel>>(newHome).FirstOrDefault();
+                    newHomeModel = JsonSerializer.Deserialize<HomeModel>(newHome);
                     Debug.WriteLine("Success");
                 }
                 else

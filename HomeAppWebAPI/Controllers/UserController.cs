@@ -26,7 +26,6 @@ public class UserController : ControllerBase
     }
 
     [HttpGet]
-    [AllowAnonymous]
     public async Task<ActionResult<string>> Get()
     {
         AuthConfig config = AuthConfig.ReadFromJsonFile("appsettings.json");
@@ -63,7 +62,6 @@ public class UserController : ControllerBase
 
     // GET api/UserController/objectId
     //User with address and home model
-    [Authorize]
     [HttpGet("{id}", Name = "GetUserFullByObjectId")]
     
     public async Task<ActionResult<ReadUserDTO>> GetUserFullByObjectId(string id)

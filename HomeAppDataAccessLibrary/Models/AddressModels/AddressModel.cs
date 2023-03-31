@@ -16,9 +16,9 @@ public class AddressModel
     [Required]
     [MaxLength(100)]
     public string Street { get; set; }
-    [Required]
-    public int UserId { get; set; }
 
-    public List<HomeModel> HomeModels { get; set; } = new List<HomeModel>();
-
+    public override string ToString()
+    {
+        return $"{Country} {City} {Street}";
+    }
 }

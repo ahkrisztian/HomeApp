@@ -1,20 +1,38 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="HomeAppMAUI.MainPage"
-             Title="Home App">
+             xmlns:model="clr-namespace:HomeAppDataAccessLibrary.Models.HomeModels;assembly=HomeAppDataAccessLibrary"
+             xmlns:addressmodel="clr-namespace:HomeAppDataAccessLibrary.Models.AddressModels;assembly=HomeAppDataAccessLibrary"
+             xmlns:viewmodel="clr-namespace:HomeAppMAUI.ViewModels"
+             x:DataType="viewmodel:MainViewModel"
+             x:Class="HomeAppMAUI.MainPage">
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Create Home" Clicked="CreateHome"/>
+        <ToolbarItem Text="Create Home" CommandParameter="{Binding User}" Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}, Path=GoToCreatePageCommand}"/>
     </ContentPage.ToolbarItems>
-
-    <CollectionView x:Name="collectionView"
-                    SelectionMode="Single"
-                    SelectionChanged="OnSelectionChanged">
-        <CollectionView.ItemTemplate>
-            <DataTemplate>
-                <Label Text="{Binding Name}" FontSize="Medium"/>
-            </DataTemplate>
-        </CollectionView.ItemTemplate>
-    </CollectionView>
+    
+    <StackLayout>
+        <CollectionView ItemsSource="{Binding homeModels}"                       
+                        SelectionMode="None">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="model:HomeModel">
+                    <Grid Padding="10">
+                        <Frame HeightRequest="100">
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer CommandParameter="{Binding .}"
+                                                      Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}, Path=GoToHomeDetailPageCommand}"/>
+                            </Frame.GestureRecognizers>
+                            <Grid>
+                                <VerticalStackLayout Padding="10">
+                                    <Label Text="{Binding Name}"/>
+                                    <Label Text="{Binding Description}"/>
+                                    <Label Text="{Binding Address}"/>
+                                </VerticalStackLayout>
+                            </Grid>
+                        </Frame>
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </StackLayout>
 </ContentPage>

@@ -17,6 +17,6 @@ namespace HomeAppDataAccessLibrary.Models
         Hall = 7,
         Kitchen = 8,
         Toilet = 9,
-        Bathroom = 10
+        Bathroom = 10,
     }
 }

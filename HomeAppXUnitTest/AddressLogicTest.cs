@@ -40,20 +40,19 @@ namespace HomeAppXUnitTest
 
             da.AddAddressByUserId(new ReadAddressDTO()
             {
-                Id = 3,
+                Id = 2,
                 Country = "USA",
                 City = "Houston",
-                Street = "Watt Str. 22",
-                UserId = 1
+                Street = "Watt Str. 22"
             }).Wait();
 
-            int expected = 3;
-            var actual = da.users.Where(i => i.Id == 1).FirstOrDefault().Addresses.Where(i => i.Id == 3).FirstOrDefault();
+            int expected = 2;
+            var actual = da.users.Where(i => i.Id == 1).FirstOrDefault().Addresses.Where(i => i.Id == 2).FirstOrDefault();
 
             Assert.Equal(expected, actual.Id);
 
             string expectedCity = "Houston";
-            var actualCity = da.users.Where(i => i.Id == 1).FirstOrDefault().Addresses.Where(i => i.Id == 3).FirstOrDefault();
+            var actualCity = da.users.Where(i => i.Id == 1).FirstOrDefault().Addresses.Where(i => i.Id == 2).FirstOrDefault();
 
             Assert.Equal(expectedCity, actualCity.City);
         }
@@ -63,7 +62,7 @@ namespace HomeAppXUnitTest
         {
             MockDataAccessContextAddress da = new MockDataAccessContextAddress(mapper);
 
-            da.DeleteAddressByUserId(1).Wait();
+            da.DeleteAddressByHomeModelId(1).Wait();
 
             int expected = 0;
 
@@ -96,8 +95,8 @@ namespace HomeAppXUnitTest
                 Id = 1,
                 Country = "France",
                 City = "Paris",
-                Street = "Gaul Ave. 2"   ,
-                UserId = 1
+                Street = "Gaul Ave. 2"
+                
             }).Result;
 
             string expected = "France";

@@ -20,7 +20,6 @@ namespace HomeAppXUnitTest.MockDataAccess
             new HomeModel()
             {
                 Id = 1,
-                AddressId = 1,
                 UserId = 1,
                 Name = "Jones Home",
                 Description = "Jones Home 1",
@@ -33,7 +32,6 @@ namespace HomeAppXUnitTest.MockDataAccess
             homeModels.Add(new HomeModel()
             {
                 Id = 2,
-                AddressId = 2,
                 UserId = 2,
                 Name = "Little Home",
                 Description = "Little Home 1",

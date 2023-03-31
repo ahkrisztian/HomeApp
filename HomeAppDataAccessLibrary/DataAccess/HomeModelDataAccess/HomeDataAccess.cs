@@ -1,4 +1,6 @@
-﻿using HomeAppDataAccessLibrary.Models.DTOs.HomeModelDTO;
+﻿using HomeAppDataAccessLibrary.Models;
+using HomeAppDataAccessLibrary.Models.AddressModels;
+using HomeAppDataAccessLibrary.Models.DTOs.HomeModelDTO;
 using HomeAppDataAccessLibrary.Models.HomeModels;
 using HomeAppDataAccessLibrary.Models.RoomModels;
 
@@ -25,8 +27,20 @@ public class HomeDataAccess : IHomeDataAccess
             return null;
         }
 
+
+
         foreach (var homemodel in output)
         {
+            var address = await dataAccess.LoadData<AddressModel, dynamic>(
+                storedProcedure: "dbo.spSelectAddressByHomeModelId",
+                new { HomeModelId = homemodel.Id },
+                connectionStringName: "Default");
+
+            if (address != null)
+            {
+                homemodel.Address = address.FirstOrDefault();
+            }
+
             var kitchen = await dataAccess.LoadData<KitchenModel, dynamic>(
                 storedProcedure: "dbo.spSelectKitchenModel",
                 new { HomeModelId = homemodel.Id },
@@ -75,17 +89,25 @@ public class HomeDataAccess : IHomeDataAccess
     {
         var output = await dataAccess.LoadData<HomeModel, dynamic>(
         storedProcedure: "dbo.spInsertHomeModel",
-        new { Name = createModel.Name, Description = createModel.Description, AddressId = createModel.AddressId, UserId = createModel.UserId },
+        new { Name = createModel.Name, Description = createModel.Description, UserId = createModel.UserId },
         connectionStringName: "Default");
 
         if(output == null)
         {
             return null;
-        }
+        }        
 
         var model =  output.FirstOrDefault();
 
-        if(createModel.Kitchen.Count > 0) 
+        if (createModel.Address is not null)
+        {
+                await dataAccess.SaveData<dynamic>(
+                storedProcedure: "dbo.spInsertAddress",
+                new { Id = model.Id, Country = createModel.Address.Country, City = createModel.Address.City, Street = createModel.Address.Street },
+                connectionStringName: "Default");
+        }
+
+        if (createModel.Kitchen.Count > 0) 
         {
             foreach(var kitchen in createModel.Kitchen)
             {
@@ -172,6 +194,16 @@ public class HomeDataAccess : IHomeDataAccess
 
         if(fullhomemodel != null)
         {
+                var newHomeModel = fullhomemodel.FirstOrDefault();
+
+                await dataAccess.SaveData<dynamic>(
+                storedProcedure: "dbo.spInsertUserAddress",
+                new { UserId = newHomeModel.UserId, AddressId = newHomeModel.Address.Id },
+                connectionStringName: "Default"); 
+        }
+
+        if(fullhomemodel != null)
+        {
             return fullhomemodel.FirstOrDefault();
         }
 
@@ -182,7 +214,7 @@ public class HomeDataAccess : IHomeDataAccess
     {
         var output = await dataAccess.LoadData<HomeModel, dynamic>(
         storedProcedure: "dbo.spUpdateHomeModel",
-        new { Id = model.Id, model.Name, Description = model.Description, AddressId = model.AddressId, UserId = model.UserId },
+        new { Id = model.Id, model.Name, Description = model.Description, UserId = model.UserId },
         connectionStringName: "Default");
 
         if (output == null)

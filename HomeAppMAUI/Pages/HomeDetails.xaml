@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:model="clr-namespace:HomeAppDataAccessLibrary.Models.RoomModels;assembly=HomeAppDataAccessLibrary"
+             x:Class="HomeAppMAUI.Pages.HomeDetails"
+             xmlns:viewmodel="clr-namespace:HomeAppMAUI.ViewModels"
+             x:DataType="viewmodel:HomeDetailsViewModel"
+             Title="HomeDetails">
+    <VerticalStackLayout>
+        <Label Text="{Binding Home.Name}"/>
+        <CollectionView ItemsSource="{Binding Home.BathRooms}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="model:BathRoomModel">
+                    <Frame HeightRequest="100">
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer CommandParameter="{Binding .}"
+                                                      Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:HomeDetailsViewModel}}, Path=GoToDetailPageCommand}"/>
+                        </Frame.GestureRecognizers>
+                        <HorizontalStackLayout Spacing="10" VerticalOptions="Center">
+                            <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center">
+                                <Label Text="{Binding RoomType}"/>
+                                <Label Text="{Binding Description}"/>
+                            </VerticalStackLayout>
+                            <Frame Style="{StaticResource DetailsFrameStyle}">
+                                <StackLayout Spacing="5">
+                                    <Label Style="{StaticResource DetailLabelStyle}" Text="Bath Tap:"/>
+                                    <BoxView Style="{StaticResource DetailBoxViewStyle}"/>
+                                    <Label Style="{StaticResource DetailLabelStyle}" Text="{Binding BathTap}"/>
+                                </StackLayout>
+                            </Frame>
+                            <Frame Style="{StaticResource DetailsFrameStyle}">
+                                <StackLayout Spacing="5">
+                                    <Label Style="{StaticResource DetailLabelStyle}" Text="Lights:"/>
+                                    <BoxView Style="{StaticResource DetailBoxViewStyle}" />
+                                    <Label Style="{StaticResource DetailLabelStyle}" Text="{Binding Lights}"/>
+                                </StackLayout>
+                            </Frame>
+                            <Frame Style="{StaticResource DetailsFrameStyle}">
+                                <StackLayout Spacing="5">
+                                    <Label Style="{StaticResource DetailLabelStyle}" Text="Tap:"/>
+                                    <BoxView Style="{StaticResource DetailBoxViewStyle}"/>
+                                    <Label Style="{StaticResource DetailLabelStyle}" Text="{Binding Tap}"/>
+                                </StackLayout>
+                            </Frame>
+                            <Frame Style="{StaticResource DetailsFrameStyle}">
+                                <StackLayout Spacing="5">
+                                    <Label Style="{StaticResource DetailLabelStyle}" Text="Toilet:"/>
+                                    <BoxView Style="{StaticResource DetailBoxViewStyle}"/>
+                                    <Label Style="{StaticResource DetailLabelStyle}" Text="{Binding Toilet}"/>
+                                </StackLayout>
+                            </Frame>
+                            <Frame Style="{StaticResource DetailsFrameStyle}">
+                                <StackLayout Spacing="5">
+                                    <Label Style="{StaticResource DetailLabelStyle}" Text="Windows:"/>
+                                    <BoxView Style="{StaticResource DetailBoxViewStyle}"/>
+                                    <Label Style="{StaticResource DetailLabelStyle}" Text="{Binding Windows}"/>
+                                </StackLayout>
+                            </Frame>
+                            <Frame Padding="5">
+                                <StackLayout Spacing="5">
+                                    <Label Style="{StaticResource DetailLabelStyle}" Text="Description:"/>
+                                    <BoxView Style="{StaticResource DetailBoxViewStyle}"/>
+                                    <Label Text="{Binding Description}"/>
+                                </StackLayout>
+                            </Frame>
+                        </HorizontalStackLayout>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+        <CollectionView ItemsSource="{Binding Home.Kitchen}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="model:KitchenModel">
+                    <Frame HeightRequest="100">
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer CommandParameter="{Binding .}"
+                                                      Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:HomeDetailsViewModel}}, Path=GoToDetailPageCommand}"/>
+                        </Frame.GestureRecognizers>
+                        <HorizontalStackLayout Spacing="10" VerticalOptions="Center">
+                            <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center">
+                                <Label Text="{Binding RoomType}"/>
+                                <Label Text="{Binding Description}"/>
+                            </VerticalStackLayout>
+                            <Frame Style="{StaticResource DetailsFrameStyle}">
+                                <StackLayout Spacing="5">
+                                    <Label Style="{StaticResource DetailLabelStyle}" Text="Sink:"/>
+                                    <BoxView Style="{StaticResource DetailBoxViewStyle}"/>
+                                    <Label Style="{StaticResource DetailLabelStyle}" Text="{Binding Sink}"/>
+                                </StackLayout>
+                            </Frame>
+                            <Frame Style="{StaticResource DetailsFrameStyle}">
+                                <StackLayout Spacing="5">
+                                    <Label Style="{StaticResource DetailLabelStyle}" Text="Lights:"/>
+                                    <BoxView Style="{StaticResource DetailBoxViewStyle}" />
+                                    <Label Style="{StaticResource DetailLabelStyle}" Text="{Binding Lights}"/>
+                                </StackLayout>
+                            </Frame>
+                            <Frame Style="{StaticResource DetailsFrameStyle}">
+                                <StackLayout Spacing="5">
+                                    <Label Style="{StaticResource DetailLabelStyle}" Text="Fridge:"/>
+                                    <BoxView Style="{StaticResource DetailBoxViewStyle}"/>
+                                    <Label Style="{StaticResource DetailLabelStyle}" Text="{Binding Fridge}"/>
+                                </StackLayout>
+                            </Frame>
+                            <Frame Style="{StaticResource DetailsFrameStyle}">
+                                <StackLayout Spacing="5">
+                                    <Label Style="{StaticResource DetailLabelStyle}" Text="Oven:"/>
+                                    <BoxView Style="{StaticResource DetailBoxViewStyle}"/>
+                                    <Label Style="{StaticResource DetailLabelStyle}" Text="{Binding Oven}"/>
+                                </StackLayout>
+                            </Frame>
+                            <Frame Style="{StaticResource DetailsFrameStyle}">
+                                <StackLayout Spacing="5">
+                                    <Label Style="{StaticResource DetailLabelStyle}" Text="Windows:"/>
+                                    <BoxView Style="{StaticResource DetailBoxViewStyle}"/>
+                                    <Label Style="{StaticResource DetailLabelStyle}" Text="{Binding Windows}"/>
+                                </StackLayout>
+                            </Frame>
+                            <Frame Style="{StaticResource DetailsFrameStyle}">
+                                <StackLayout Spacing="5">
+                                    <Label Style="{StaticResource DetailLabelStyle}" Text="Electronics:"/>
+                                    <BoxView Style="{StaticResource DetailBoxViewStyle}"/>
+                                    <Label Style="{StaticResource DetailLabelStyle}" Text="{Binding OtherElectronics}"/>
+                                </StackLayout>
+                            </Frame>
+                            <Frame Padding="5">
+                                <StackLayout Spacing="5">
+                                    <Label Style="{StaticResource DetailLabelStyle}" Text="Description:"/>
+                                    <BoxView Style="{StaticResource DetailBoxViewStyle}"/>
+                                    <Label Text="{Binding Description}"/>
+                                </StackLayout>
+                            </Frame>
+                        </HorizontalStackLayout>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+        <CollectionView ItemsSource="{Binding Home.Toilet}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="model:ToiletModel">
+                    <Frame HeightRequest="100">
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer CommandParameter="{Binding .}"
+                                                      Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:HomeDetailsViewModel}}, Path=GoToDetailPageCommand}"/>
+                        </Frame.GestureRecognizers>
+                        <HorizontalStackLayout Spacing="10" VerticalOptions="Center">
+                            <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center">
+                                <Label Text="{Binding RoomType}"/>
+                                <Label Text="{Binding Description}"/>
+                            </VerticalStackLayout>
+                            <Frame Style="{StaticResource DetailsFrameStyle}">
+                                <StackLayout Spacing="5">
+                                    <Label Style="{StaticResource DetailLabelStyle}" Text="Tap:"/>
+                                    <BoxView Style="{StaticResource DetailBoxViewStyle}"/>
+                                    <Label Style="{StaticResource DetailLabelStyle}" Text="{Binding Tap}"/>
+                                </StackLayout>
+                            </Frame>
+                            <Frame Style="{StaticResource DetailsFrameStyle}">
+                                <StackLayout Spacing="5">
+                                    <Label Style="{StaticResource DetailLabelStyle}" Text="Lights:"/>
+                                    <BoxView Style="{StaticResource DetailBoxViewStyle}" />
+                                    <Label Style="{StaticResource DetailLabelStyle}" Text="{Binding Lights}"/>
+                                </StackLayout>
+                            </Frame>
+                            <Frame Style="{StaticResource DetailsFrameStyle}">
+                                <StackLayout Spacing="5">
+                                    <Label Style="{StaticResource DetailLabelStyle}" Text="Toilet:"/>
+                                    <BoxView Style="{StaticResource DetailBoxViewStyle}"/>
+                                    <Label Style="{StaticResource DetailLabelStyle}" Text="{Binding Toilet}"/>
+                                </StackLayout>
+                            </Frame>
+                            <Frame Style="{StaticResource DetailsFrameStyle}">
+                                <StackLayout Spacing="5">
+                                    <Label Style="{StaticResource DetailLabelStyle}" Text="Windows:"/>
+                                    <BoxView Style="{StaticResource DetailBoxViewStyle}"/>
+                                    <Label Style="{StaticResource DetailLabelStyle}" Text="{Binding Windows}"/>
+                                </StackLayout>
+                            </Frame>
+                            <Frame Padding="5">
+                                <StackLayout Spacing="5">
+                                    <Label Style="{StaticResource DetailLabelStyle}" Text="Description:"/>
+                                    <BoxView Style="{StaticResource DetailBoxViewStyle}"/>
+                                    <Label Text="{Binding Description}"/>
+                                </StackLayout>
+                            </Frame>
+                        </HorizontalStackLayout>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+        <CollectionView ItemsSource="{Binding Home.Rooms}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="model:RoomModel">
+                    <Frame HeightRequest="100">
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer CommandParameter="{Binding .}"
+                                                      Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:HomeDetailsViewModel}}, Path=GoToDetailPageCommand}"/>
+                        </Frame.GestureRecognizers>
+                        <HorizontalStackLayout Spacing="10" VerticalOptions="Center">
+                            <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center">
+                                <Label Text="{Binding RoomType}"/>
+                                <Label Text="{Binding Description}"/>
+                            </VerticalStackLayout>
+                            <Frame Style="{StaticResource DetailsFrameStyle}">
+                                <StackLayout Spacing="5">
+                                    <Label Style="{StaticResource DetailLabelStyle}" Text="Electronics:"/>
+                                    <BoxView Style="{StaticResource DetailBoxViewStyle}"/>
+                                    <Label Style="{StaticResource DetailLabelStyle}" Text="{Binding Electronics}"/>
+                                </StackLayout>
+                            </Frame>
+                            <Frame Style="{StaticResource DetailsFrameStyle}">
+                                <StackLayout Spacing="5">
+                                    <Label Style="{StaticResource DetailLabelStyle}" Text="Lights:"/>
+                                    <BoxView Style="{StaticResource DetailBoxViewStyle}" />
+                                    <Label Style="{StaticResource DetailLabelStyle}" Text="{Binding Lights}"/>
+                                </StackLayout>
+                            </Frame>
+                            <Frame Style="{StaticResource DetailsFrameStyle}">
+                                <StackLayout Spacing="5">
+                                    <Label Style="{StaticResource DetailLabelStyle}" Text="Windows:"/>
+                                    <BoxView Style="{StaticResource DetailBoxViewStyle}"/>
+                                    <Label Style="{StaticResource DetailLabelStyle}" Text="{Binding Windows}"/>
+                                </StackLayout>
+                            </Frame>
+                            <Frame Padding="5">
+                                <StackLayout Spacing="5">
+                                    <Label Style="{StaticResource DetailLabelStyle}" Text="Description:"/>
+                                    <BoxView Style="{StaticResource DetailBoxViewStyle}"/>
+                                    <Label Text="{Binding Description}"/>
+                                </StackLayout>
+                            </Frame>
+                        </HorizontalStackLayout>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </VerticalStackLayout>
+</ContentPage>
